@@ -60,11 +60,11 @@ public class ShowEmployee {
         return "redirect:/Reg";
     }
 
-<<<<<<< HEAD
+
     @PostMapping("/update")
-    public String ToUpdate(){
+    public String ToUpdate() {
         return null;
-=======
+    }
 //    修改员工
     @PostMapping("/updateEmployee/{empId}")
     public String ToUpdateEmployee(@PathVariable Integer empId,
@@ -79,7 +79,7 @@ public class ShowEmployee {
 //        System.out.println("empName = " + empName);
 //        System.out.println("empId = " + empId);
         return "redirect:/Reg";
->>>>>>> New_One
+
     }
 
     @ResponseBody
