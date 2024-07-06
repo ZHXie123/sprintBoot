@@ -62,8 +62,17 @@ public class ShowEmployee {
 
 //    修改员工
     @PostMapping("/updateEmployee/{empId}")
-    public String ToUpdateEmployee(){
-
+    public String ToUpdateEmployee(@PathVariable Integer empId,
+                                   @RequestParam("empName") String empName,
+                                   @RequestParam("empSalary") Double empSalary){
+        Employee employee = new Employee();
+        employee.setEmpId(empId);
+        employee.setEmpName(empName);
+        employee.setEmpSalary(empSalary);
+        int rows = employeeMapper.updateEmployee(employee);
+//        System.out.println("empSalary = " + empSalary);
+//        System.out.println("empName = " + empName);
+//        System.out.println("empId = " + empId);
         return "redirect:/Reg";
     }
 

@@ -9,6 +9,10 @@
         insert into t_emp (emp_name,emp_salary) values (#{employee.empName},#{employee.empSalary});
     </insert>
 
+    <update id="updateEmployee">
+        update t_emp set emp_name = #{empName},emp_salary = #{empSalary} where emp_id = #{empId};
+    </update>
+
     <delete id="deleteEmp">
         delete from t_emp where emp_id = #{id};
     </delete>
