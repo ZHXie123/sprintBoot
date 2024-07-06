@@ -1,0 +1,63 @@
+<!--register.html-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register Page</title>
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
+    <script>
+        function deleteEmployee(empId) {
+            console.log(empId);
+            if (confirm('Are you sure you want to delete this employee?')) {
+                $.ajax({
+                    url: '/deleteEmployee/' + empId,
+                    type: 'POST',
+                    success: function() {
+                        location.reload(); // 刷新页面
+                    },
+                    error: function() {
+                        alert('Error deleting employee');
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>Employee List</h1>
+
+<table border="1">
+    <tr>
+        <th>Employee ID</th>
+        <th>Name</th>
+        <th>Salary</th>
+        <th>Actions</th> <!-- 添加操作列 -->
+    </tr>
+    <tr th:each="employee : ${employees}">
+        <td th:text="${employee.empId}"></td>
+        <td th:text="${employee.empName}"></td>
+        <td th:text="${employee.empSalary}"></td>
+        <td>
+            <!-- 添加删除按钮 -->
+            <button th:id="'deleteButton'+${employee.empId}" th:onclick="'deleteEmployee('+${employee.empId}+')'">Delete</button>
+        </td>
+    </tr>
+</table>
+
+<!-- 表单开始 -->
+<form action="#" th:action="@{/submitRegistration}"  method="post">
+
+    <label for="empName">Name:</label>
+    <input type="text" id="empName" name="empName" required><br><br>
+
+    <label for="empSalary">Salary:</label>
+    <input type="number" id="empSalary" name="empSalary" step="0.01"  required><br><br>
+
+    <input type="submit" value="Add New Employee">
+</form>
+
+<a th:href="@{/anotherPage}">Go to Another Page</a>
+
+</body>
+</html>
+

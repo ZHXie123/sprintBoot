@@ -1,0 +1,21 @@
+<!-- anotherPage.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Another Page</title>
+</head>
+<body>
+<h1>This is Another Page</h1>
+<!-- 页面内容 -->
+
+<table border="1">
+    <tr>
+        <th>Employee ID</th>
+    </tr>
+    <tr th:each="attribute : ${someAttribute}">
+        <td th:text="${attribute}"></td>
+    </tr>
+</table>
+
+</body>
+</html>
