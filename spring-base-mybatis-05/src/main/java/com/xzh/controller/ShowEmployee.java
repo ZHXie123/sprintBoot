@@ -19,6 +19,7 @@ public class ShowEmployee {
     @Autowired
     private EmployeeMapper employeeMapper;
 
+
     @GetMapping("/showData")
     public String showData(Model model) {
         // 假设这是从Service获取的数据
@@ -34,6 +35,7 @@ public class ShowEmployee {
         return "anotherPage"; // 返回页面名称，不包括扩展名
     }
 
+//    添加新员工
     @PostMapping("/submitRegistration")
     public String registerEmployee(@ModelAttribute Employee newEmployee) {
         // 这里可以添加验证逻辑
@@ -42,7 +44,7 @@ public class ShowEmployee {
         return "redirect:/Reg"; // 重定向回注册页面或其他页面
     }
 
-
+//首页
     @GetMapping("/Reg")
     public String ToReg(Model model){
         List<Employee> employeeList = employeeMapper.getAllEmp();
@@ -50,11 +52,18 @@ public class ShowEmployee {
         model.addAttribute("employees", employeeList);
         return "register";
     }
-
+//    删除员工
     @PostMapping("/deleteEmployee/{empId}")
     public String ToDelete(@PathVariable Integer empId){
         int rows = employeeMapper.deleteEmp(empId);
         System.out.println("rows = " + rows);
+        return "redirect:/Reg";
+    }
+
+//    修改员工
+    @PostMapping("/updateEmployee/{empId}")
+    public String ToUpdateEmployee(){
+
         return "redirect:/Reg";
     }
 

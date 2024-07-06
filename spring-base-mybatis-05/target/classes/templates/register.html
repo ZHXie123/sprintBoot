@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
     <script th:src="@{/webjars/jquery/3.6.0/jquery.min.js}"></script>
     <script>
+        // 删除员工的按钮
         function deleteEmployee(empId) {
             console.log(empId);
             if (confirm('Are you sure you want to delete this employee?')) {
@@ -20,6 +21,47 @@
                     }
                 });
             }
+        }
+
+        // 编辑员工信息的函数
+        function editEmployee(empId) {
+            // 填充模态框中的表单
+            // 这里需要根据实际的获取方式来填充表单
+            document.getElementById('editEmpId').value = empId;
+            document.getElementById('editEmpName').value = ''; // 假设从服务器获取
+            document.getElementById('editEmpSalary').value = ''; // 假设从服务器获取
+
+            // 显示模态框
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        // 关闭编辑模态框的函数
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // 更新员工信息的函数
+        function updateEmployee() {
+            var empId = document.getElementById('editEmpId').value;
+            var empName = document.getElementById('editEmpName').value;
+            var empSalary = document.getElementById('editEmpSalary').value;
+
+            // 发送更新请求到服务器
+            $.ajax({
+                url: '/updateEmployee/' + empId,
+                type: 'POST',
+                data: {
+                    empName: empName,
+                    empSalary: empSalary
+                },
+                success: function() {
+                    alert('Employee updated successfully');
+                    location.reload(); // 刷新页面
+                },
+                error: function() {
+                    alert('Error updating employee');
+                }
+            });
         }
     </script>
 </head>
@@ -38,11 +80,25 @@
         <td th:text="${employee.empName}"></td>
         <td th:text="${employee.empSalary}"></td>
         <td>
-            <!-- 添加删除按钮 -->
-            <button th:id="'deleteButton'+${employee.empId}" th:onclick="'deleteEmployee('+${employee.empId}+')'">Delete</button>
+<!--            删除按钮-->
+            <button class="btnDelete" th:id="'deleteButton'+${employee.empId}" th:onclick="'deleteEmployee('+${employee.empId}+')'">Delete</button>
+<!--            编辑按钮-->
+            <button class="btnEdit" th:id="'editButton'+${employee.empId}" th:onclick="'editEmployee('+${employee.empId}+')'">Edit</button>
         </td>
     </tr>
 </table>
+
+<!-- 用于修改员工信息的模态框 -->
+<div id="editModal" style="display:none;">
+    <h2>Update Employee</h2>
+    <input type="hidden" id="editEmpId"> <!-- 用于存储员工ID -->
+    <label for="editEmpName">Name:</label>
+    <input type="text" id="editEmpName"><br><br>
+    <label for="editEmpSalary">Salary:</label>
+    <input type="number" id="editEmpSalary" step="0.01"><br><br>
+    <button onclick="updateEmployee()">Update</button>
+    <button onclick="closeEditModal()">Cancel</button>
+</div>
 
 <!-- 表单开始 -->
 <form action="#" th:action="@{/submitRegistration}"  method="post">
