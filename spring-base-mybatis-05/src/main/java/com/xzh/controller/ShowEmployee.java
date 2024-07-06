@@ -58,6 +58,11 @@ public class ShowEmployee {
         return "redirect:/Reg";
     }
 
+    @PostMapping("/update")
+    public String ToUpdate(){
+        return null;
+    }
+
     @ResponseBody
     @RequestMapping
     public List<Employee> showEmployee(){
