@@ -10,6 +10,9 @@ import java.util.List;
 @Component
 public interface EmployeeMapper {
 
+    int updateEmployee(Employee employee);
+
+
     List<Employee> getAllEmp();
 
     int deleteEmp(@Param("id") Integer id);
